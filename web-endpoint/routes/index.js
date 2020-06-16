@@ -1,4 +1,6 @@
-console.log(require('../app'));
+const { app, socket } = require('../app');
+console.log(`app ${app}`);
+console.log(`socket ${socket}`);
 var express = require('express');
 var router = express.Router();
 
