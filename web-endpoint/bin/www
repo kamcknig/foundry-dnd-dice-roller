@@ -5,6 +5,8 @@
  */
 
 const { app, socket } = require('../app');
+console.log(`app ${app}`);
+console.log(`socket ${socket}`);
 
 var debug = require('debug')('foundry-dnd-dice-roller:server');
 var http = require('http');
