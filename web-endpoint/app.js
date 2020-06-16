@@ -7,7 +7,7 @@ var logger = require('morgan');
 var socket = require('socket.io-client')('http://localhost:8082');
 
 socket.on('connect', () => {
-	console.log(`HTTP server 'connect' event to socket server`);
+	console.log(`HTTP server - 'connect' event to socket server`);
 });
 
 var app = express();
