@@ -1,4 +1,4 @@
-const socket = require('../app').socket;
+const { socket } = require('../app');
 var express = require('express');
 var router = express.Router();
 
