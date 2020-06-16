@@ -1,0 +1,7 @@
+{
+  "name": "foundry-dnd-dice-roller",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
