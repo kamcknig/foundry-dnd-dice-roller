@@ -8,8 +8,8 @@ var socket = require('socket.io-client')('http://localhost:8082');
 socket.on('connect', () => {
 	console.log('connected on client');
 });
-socket.on('connected', data => {
-	console.log(data);
+socket.on('connected', () => {
+	console.log('Socket connected');
 });
 
 var app = express();
