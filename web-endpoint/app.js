@@ -4,6 +4,14 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+var socket = require('socket.io-client')('http://localhost:8082');
+socket.on('connect', () => {
+	console.log('connected on client');
+});
+socket.on('connected', data => {
+	console.log(data);
+});
+
 var indexRouter = require('./routes/index');
 
 var app = express();
@@ -34,14 +42,6 @@ app.use(function(err, req, res, next) {
   // render the error page
   res.status(err.status || 500);
   res.render('error');
-});
-
-var socket = require('socket.io-client')('http://localhost:8082');
-socket.on('connect', () => {
-	console.log('connected on client');
-});
-socket.on('connected', data => {
-	console.log(data);
 });
 
 module.exports = { app, socket };
