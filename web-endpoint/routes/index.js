@@ -1,6 +1,5 @@
-const { app, socket } = require('../app');
-console.log(`app ${app}`);
-console.log(`socket ${socket}`);
+const { socket } = require('../app');
+
 var express = require('express');
 var router = express.Router();
 

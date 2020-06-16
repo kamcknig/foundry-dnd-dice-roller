@@ -10,10 +10,6 @@ socket.on('connect', () => {
 	console.log(`HTTP server 'connect' event to socket server`);
 });
 
-socket.on('connected', () => {
-	console.log('Socket connected');
-});
-
 var app = express();
 
 module.exports = { app, socket };
