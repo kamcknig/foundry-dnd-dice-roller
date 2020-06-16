@@ -36,8 +36,6 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-module.exports = { app };
-
 var socket = require('socket.io-client')('http://localhost:8082');
 socket.on('connect', () => {
 	console.log('connected on client');
@@ -46,3 +44,4 @@ socket.on('connected', data => {
 	console.log(data);
 });
 
+module.exports = { app, socket };

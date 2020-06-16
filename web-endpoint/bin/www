@@ -4,7 +4,8 @@
  * Module dependencies.
  */
 
-var app = require('../app').app;
+const { app, socket } = require('../app');
+console.log(app, socket);
 var debug = require('debug')('foundry-dnd-dice-roller:server');
 var http = require('http');
 
