@@ -5,9 +5,11 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var socket = require('socket.io-client')('http://localhost:8082');
+
 socket.on('connect', () => {
-	console.log('connected on client');
+	console.log(`HTTP server 'connect' event to socket server`);
 });
+
 socket.on('connected', () => {
 	console.log('Socket connected');
 });
