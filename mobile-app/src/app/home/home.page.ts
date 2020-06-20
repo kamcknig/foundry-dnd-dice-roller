@@ -11,11 +11,7 @@ export class HomePage {
   constructor(private http: HttpClient) {}
 
   public testFetch(): void {
-    const headers: HttpHeaders = new HttpHeaders({
-      Accept: 'text/html'
-    });
-
-    this.http.get('https://foundry-api.turkeysunite.com', { headers, responseType: 'text' }).subscribe({
+    this.http.get('https://foundry-api.turkeysunite.com').subscribe({
       next: (value) => {
         console.log(value);
       }
