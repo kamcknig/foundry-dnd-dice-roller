@@ -10,7 +10,7 @@ router.get('/', async function(req, res, next) {
 
   const socketResponse = await new Promise(resolve => socket.emit('dice-roll', socketResponse => resolve(socketResponse)));
   console.log(`Received response from socket ${socketResponse}`);
-  res.send(socketResponse);
+  res.send({ result: socketResponse });
 });
 
 module.exports = router;
