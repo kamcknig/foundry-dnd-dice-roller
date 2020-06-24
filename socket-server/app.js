@@ -1,12 +1,14 @@
 const io = require('socket.io')(8082);
 
-// temporary variable
 let connections = new Map();
 
+let users = new Map();
+let usersList = new Map();
+
 /**
- * Create the default namespace. This is where the HTTP server connects
+ * Create the default namespace. This is where the mobile devices connect
  */
-io.on('connection', (socket) => {
+io.on('connection', async (socket) => {
 	console.log(`Socket server - client '${socket.id}' connected to default namespace`);
 	connections.set(socket.id, socket);
 
@@ -15,6 +17,9 @@ io.on('connection', (socket) => {
 		console.log(`Reason '${reason}'`);
 		connections.delete(socket.id);
 	});
+
+	// send the user list to the connected device
+	socket.emit('user-list', usersList.map(u => u.name));
 
 	socket.on('request-roll', async callbackFn => {
 		console.log(`Socket server - Received request for dice roll from '${socket.id}'`);
@@ -32,7 +37,6 @@ io.on('connection', (socket) => {
 		});
 
 		console.log(`Socket server - Received result from foundry`);
-		console.log(result);
 		callbackFn(typeof result === 'object' ? result : { result: { total: result } });
 	});
 });
@@ -40,13 +44,22 @@ io.on('connection', (socket) => {
 let foundryConnections = new Map();
 
 const foundryNsp = io.of('/foundry');
+
 foundryNsp.on('connection', socket => {
 	console.log(`Socket server - foundry app '${socket.id}' has connected to server`);
 	foundryConnections.set(socket.id, socket);
 
+	socket.on('add-user', user => {
+		console.log(`Socket server - Received new user ${users}`);
+		users.set(socket.id, user);
+		for (const [id, socket] of connections) {
+			socket.emit('user-list', users);
+		}
+	});
+
 	socket.on('disconnect', reason => {
 		console.log(`Socket server - foundry app '${socket.id}' has disconnected from server`);
-		console.log(`${reason}`);
+		users.delete(socket.id);
 		foundryConnections.delete(socket.id);
 	});
 });
