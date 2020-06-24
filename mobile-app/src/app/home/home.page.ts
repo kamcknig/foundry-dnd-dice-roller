@@ -11,7 +11,10 @@ import { MessageTypes } from '../message/message-types';
 })
 export class HomePage implements OnInit {
 
+  public selectedUserName: string;
   public socketConnected$: Observable<boolean>;
+  public userNames$: Observable<string[]>;
+  public users$: Observable<any[]>;
 
   constructor(
     private socket: Socket
@@ -23,8 +26,21 @@ export class HomePage implements OnInit {
       this.socket.fromEvent('disconnect')
     ).pipe(
       // if we have a value it's because it's a disconnected because that comes with a reason
-      map(value => !value)
+      map(value => {
+        console.log(`${value ? 'disconnected' : 'connected'}`);
+        return !value;
+      })
     );
+
+    // observable to obtain the up-to-date users list when the server sends it
+    this.users$ = this.socket.fromEvent(MessageTypes.USER_LIST);
+
+    // create a list of user names for the user to select
+    this.userNames$ = this.users$.pipe(
+      map((users: string[]) => {
+        console.log(`Received user list`);
+        return users.map((user: any) => user.name);
+      }));
   }
 
   handleRoll(): void {
@@ -32,5 +48,9 @@ export class HomePage implements OnInit {
       console.log(`Received roll response`);
       console.log(response);
     });
+  }
+
+  selectUserName(name: string): void {
+    this.selectedUserName = name;
   }
 }
