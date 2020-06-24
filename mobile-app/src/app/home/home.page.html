@@ -1,7 +1,17 @@
 <ion-content>
-  <ion-fab vertical="center" horizontal="center" slot="fixed">
-    <ion-fab-button (click)="testFetch()" style="font-size: 80px;">
-      <ion-icon size="larege" src="/assets/d20.svg"></ion-icon>
-    </ion-fab-button>
+  <ion-fab
+    *ngIf="socketConnected$ | async; else notConnected"
+    vertical="bottom"
+    horizontal="left"
+    slot="fixed">
+      <ion-icon style="font-size: 72px;" src="/assets/d20.svg" (click)="handleRoll()"></ion-icon>
   </ion-fab>
+  <ng-template #notConnected>
+    <ion-fab
+      vertical="center"
+      horizontal="center"
+      slot="fixed">
+      <p>NOT CONNECTED</p>
+    </ion-fab>
+  </ng-template>
 </ion-content>
