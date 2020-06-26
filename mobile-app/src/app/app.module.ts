@@ -12,19 +12,31 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { SocketIoModule } from 'ngx-socket-io';
 import { StoreModule } from '@ngrx/store';
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { AuthModule } from './feature/auth/auth.module';
+import { SharedModule } from './feature/shared/shared.module';
+
+//https://foundry-api2.turkeysunite.com
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [
+    AppComponent
+  ],
   entryComponents: [],
   imports: [
     BrowserModule,
+    FlexLayoutModule,
     HttpClientModule,
     SocketIoModule.forRoot({
-      url: 'https://foundry-api2.turkeysunite.com'
+      url: 'http://localhost:8082'
     }),
     IonicModule.forRoot(),
     AppRoutingModule,
-    StoreModule.forRoot({}, {})
+    StoreModule.forRoot({}, {}),
+    BrowserAnimationsModule,
+    SharedModule,
+    AuthModule
   ],
   providers: [
     StatusBar,

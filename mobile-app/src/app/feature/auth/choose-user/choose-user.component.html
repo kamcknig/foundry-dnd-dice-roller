@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>
+      Choose a user
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+<ion-list
+  *ngIf="socketService.connected$ | async"
+  lines="full"
+>
+  <ion-item
+    *ngFor="let user of users$ | async"
+    button
+    (click)="selectUser(user)"
+    [style.--background]="user.color"
+  >
+    <ion-label>{{user.name}}</ion-label>
+  </ion-item>
+</ion-list>
+</ion-content>

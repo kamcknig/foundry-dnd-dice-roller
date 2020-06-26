@@ -1,0 +1,18 @@
+<ion-content>
+  <ion-content>
+    <ion-fab
+      *ngIf="socketService.connected$ | async"
+      vertical="bottom"
+      horizontal="left"
+      slot="fixed">
+        <ion-icon style="font-size: 72px;" src="/assets/d20.svg" (click)="handleRoll()"></ion-icon>
+    </ion-fab>
+    <ion-fab
+      *ngIf="(socketService.connected$ | async) === false"
+      style="width: 100%; text-align: center;"
+      vertical="center"
+      slot="fixed">
+      <ion-label color="primary">NOT CONNECTED</ion-label>
+    </ion-fab>
+  </ion-content>
+</ion-content>
