@@ -2,6 +2,8 @@ import { Injectable } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { MessageTypes } from 'src/app/message/message-types';
+import { tap } from 'rxjs/operators';
+import { User } from 'src/app/foundry/foundry.models';
 
 @Injectable({
   providedIn: 'root'
@@ -19,7 +21,13 @@ export class SocketService {
     this.socket.on('disconnect', this.socketDisconnected);
 
     // observable to obtain the up-to-date users list when the server sends it
-    this.users$ = this.socket.fromEvent(MessageTypes.USER_LIST);
+    this.users$ = this.socket.fromEvent(MessageTypes.USER_LIST).pipe(
+      tap(users => {
+        users.forEach((u: User) => {
+          console.log(u);
+        });
+      })
+    );
   }
 
   private socketConnected = (): void => {

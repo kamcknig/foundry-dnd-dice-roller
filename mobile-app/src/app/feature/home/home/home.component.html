@@ -1,18 +1,27 @@
 <ion-content>
-  <ion-content>
-    <ion-fab
-      *ngIf="socketService.connected$ | async"
-      vertical="bottom"
-      horizontal="left"
-      slot="fixed">
-        <ion-icon style="font-size: 72px;" src="/assets/d20.svg" (click)="handleRoll()"></ion-icon>
-    </ion-fab>
-    <ion-fab
-      *ngIf="(socketService.connected$ | async) === false"
-      style="width: 100%; text-align: center;"
-      vertical="center"
-      slot="fixed">
-      <ion-label color="primary">NOT CONNECTED</ion-label>
-    </ion-fab>
-  </ion-content>
+  <ion-fab
+    slot="fixed"
+    vertical="bottom"
+    horizontal="end">
+    <ion-fab-button>
+      <ion-icon name="apps-sharp"></ion-icon>
+    </ion-fab-button>
+
+    <ion-fab-list side="top">
+      <ion-fab-button data-desc="Roll">
+        <ion-icon size="large" src="/assets/d20.svg" (click)="handleRoll()"></ion-icon>
+      </ion-fab-button>
+
+      <ion-fab-button data-desc="Some Action 1"></ion-fab-button>
+
+      <ion-fab-button data-desc="Some Action 2"></ion-fab-button>
+    </ion-fab-list>
+  </ion-fab>
+
+  <ion-fab
+    *ngIf="(socketService.connected$ | async) === false"
+    style="width: 100%; text-align: center;"
+    vertical="center">
+    <ion-label color="primary">NOT CONNECTED</ion-label>
+  </ion-fab>
 </ion-content>

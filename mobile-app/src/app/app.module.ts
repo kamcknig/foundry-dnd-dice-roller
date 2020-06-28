@@ -16,8 +16,11 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AuthModule } from './feature/auth/auth.module';
 import { SharedModule } from './feature/shared/shared.module';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { environment } from '../environments/environment';
+import { EffectsModule } from '@ngrx/effects';
 
-//https://foundry-api2.turkeysunite.com
+// https://foundry-api2.turkeysunite.com
 
 @NgModule({
   declarations: [
@@ -32,11 +35,13 @@ import { SharedModule } from './feature/shared/shared.module';
       url: 'http://localhost:8082'
     }),
     IonicModule.forRoot(),
-    AppRoutingModule,
     StoreModule.forRoot({}, {}),
     BrowserAnimationsModule,
     SharedModule,
-    AuthModule
+    AppRoutingModule,
+    AuthModule,
+    EffectsModule.forRoot([]),
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
   ],
   providers: [
     StatusBar,

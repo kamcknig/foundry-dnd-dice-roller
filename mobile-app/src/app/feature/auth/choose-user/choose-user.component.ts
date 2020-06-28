@@ -2,31 +2,30 @@ import { Component, OnInit } from '@angular/core';
 import { SocketService } from '../../socket/socket.service';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
-import { DomSanitizer } from '@angular/platform-browser';
+import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
+import { Store } from '@ngrx/store';
+import { userSelected } from '../redux/auth.actions';
+import { AuthState } from '../redux/auth.state';
+import { User } from 'src/app/foundry/foundry.models';
 
 @Component({
   selector: 'app-choose-user',
   templateUrl: 'choose-user.component.html',
   styleUrls: ['choose-user.component.scss'],
 })
-export class ChooseUserComponent implements OnInit {
-
-  public users$: Observable<any[]>;
+export class ChooseUserComponent {
 
   constructor(
     public socketService: SocketService,
-    public sanitizer: DomSanitizer
+    public sanitizer: DomSanitizer,
+    private store: Store<AuthState>
   ) {}
 
-  ngOnInit(): void {
-    this.users$ = this.socketService.users$.pipe(tap(users => users.forEach(u => console.log(u))));
+  public selectUser(user: User): void {
+    this.store.dispatch(userSelected(user));
   }
 
-  public selectUser(user: any): void {
-
-  }
-
-  public getItemStyle(user): any {
+  public getItemStyle(user: User): SafeStyle {
     return this.sanitizer.bypassSecurityTrustStyle('--background: ' + user.color);
   }
 }
