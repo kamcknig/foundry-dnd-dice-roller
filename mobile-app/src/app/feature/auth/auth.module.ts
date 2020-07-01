@@ -7,7 +7,7 @@ import { authReducer } from './redux/auth.reducers';
 import { authStateKey } from './redux/auth.state';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './auth.effects';
-import { CommonModule } from '@angular/common';
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 const routes: Routes = [
   { path: '', component: ChooseUserComponent }
@@ -19,6 +19,7 @@ const routes: Routes = [
   ],
   imports: [
     SharedModule,
+    FlexLayoutModule,
     RouterModule.forChild(routes),
     EffectsModule.forFeature([AuthEffects]),
     StoreModule.forFeature(authStateKey, authReducer)

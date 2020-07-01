@@ -42,14 +42,20 @@ export class SocketService {
     this._connected$.next(false);
   }
 
-  public async emit(eventName: MessageTypes, callback?: (response) => void | Promise<any>, ...args) {
+  public async emit<T>(eventName: MessageTypes, callback: boolean = false, ...args): Promise<T> {
     if (!args) {
       args = [];
     }
 
     if (callback) {
-      await this.socket.emit(eventName, ...args, callback);
-      return;
+      const result = await new Promise<T>(
+        resolve => this.socket.emit(
+          eventName,
+          ...args,
+          (...resultArgs) => resolve(resultArgs.length === 1 ? resultArgs[0] : (resultArgs.length === 0 ? undefined : resultArgs))
+        )
+      );
+      return result;
     }
 
     this.socket.emit(eventName, ...args);

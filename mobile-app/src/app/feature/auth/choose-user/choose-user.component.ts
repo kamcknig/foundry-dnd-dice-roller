@@ -1,12 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { SocketService } from '../../socket/socket.service';
-import { Observable } from 'rxjs';
-import { tap } from 'rxjs/operators';
 import { DomSanitizer, SafeStyle } from '@angular/platform-browser';
 import { Store } from '@ngrx/store';
-import { userSelected } from '../redux/auth.actions';
 import { AuthState } from '../redux/auth.state';
 import { User } from 'src/app/foundry/foundry.models';
+import { tokenEntered as tokenEntered } from '../redux/auth.actions';
 
 @Component({
   selector: 'app-choose-user',
@@ -21,8 +19,12 @@ export class ChooseUserComponent {
     private store: Store<AuthState>
   ) {}
 
-  public selectUser(user: User): void {
-    this.store.dispatch(userSelected(user));
+  public handleSubmit(event: KeyboardEvent, token: string):void {
+    if (event.keyCode !== 13) {
+      return;
+    }
+
+    this.store.dispatch(tokenEntered({ token }));
   }
 
   public getItemStyle(user: User): SafeStyle {

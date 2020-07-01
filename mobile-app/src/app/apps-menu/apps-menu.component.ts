@@ -28,16 +28,15 @@ export class AppsMenuComponent implements OnInit {
     this.user$ = this._store.pipe(select(selectUser));
   }
 
-  handleRoll(): void {
-    this.socketService.emit(MessageTypes.REQUEST_ROLL, async response => {
-      const toast = await this._toastController.create({
-        animated: true,
-        duration: 2000,
-        header: 'Roll Result!',
-        message: response.result.total
-      });
+  async handleRoll(): Promise<void> {
+    // const rollResult = await this.socketService.emit(MessageTypes.REQUEST_ROLL, true);
+    // const toast = await this._toastController.create({
+    //   animated: true,
+    //   duration: 2000,
+    //   header: 'Roll Result!',
+    //   message: rollResult.result.total
+    // });
 
-      toast.present();
-    });
+    // toast.present();
   }
 }

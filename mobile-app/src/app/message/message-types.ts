@@ -3,5 +3,5 @@ export enum MessageTypes {
   REQUEST_ROLL = 'request-roll',
   USER_LIST = 'user-list',
   REQUEST_USER_LIST = 'request-user-list',
-  USER_SELECTED = 'user-selected'
+  TOKEN_ENTERED = 'token-entered'
 }
