@@ -23,14 +23,16 @@ export class AuthEffects {
       ofType(tokenEntered),
       switchMap(async ({ token }) => await this._socketService.emit<User>(MessageTypes.TOKEN_ENTERED, true, token)),
       tap(async user => {
-        const toast = await this._toastController.create({
-          animated: true,
-          duration: 2000,
-          header: 'Authentication Failed',
-          message: 'Incorrect token entered'
-        });
+        if (!user) {
+          const toast = await this._toastController.create({
+            animated: true,
+            duration: 2000,
+            header: 'Authentication Failed',
+            message: 'Incorrect token entered'
+          });
 
-        toast.present();
+          toast.present();
+        }
       }),
       map(user => user ? userAuthenticated(user) : noop())
     )

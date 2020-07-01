@@ -1,7 +1,14 @@
 <ion-app>
   <ion-header>
     <ion-toolbar>
-      <ion-title>Foundry Companion</ion-title>
+      <ion-title>
+        Foundry Companion
+        <span
+          *ngIf="user$ | async as user"
+          [ngStyle]="{ 'color': user.color }">
+          ({{user.name}})
+        </span>
+      </ion-title>
     </ion-toolbar>
   </ion-header>
 

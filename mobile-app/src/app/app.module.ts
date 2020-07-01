@@ -21,6 +21,7 @@ import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
 import { HomeModule } from './feature/home/home.module';
 import { AppsMenuComponent } from './apps-menu/apps-menu.component';
+import { CommonModule } from '@angular/common';
 
 // https://foundry-api2.turkeysunite.com
 
