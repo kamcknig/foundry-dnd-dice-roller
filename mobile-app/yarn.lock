@@ -100,7 +100,7 @@
     "@angular-devkit/core" "10.0.0"
     rxjs "6.5.5"
 
-"@angular-devkit/core@10.0.0":
+"@angular-devkit/core@10.0.0", "@angular-devkit/core@^10.0.0":
   version "10.0.0"
   resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-10.0.0.tgz#9f6378a295a559d1a0bf12af200c0c9d59428a65"
   integrity sha512-IvX9IMaCjDkN9vDVnYcgWbSBinlUUb7jdFhDGeTtK6rGSnjX1GoLvWneVI2hoccS07fPbnfMoYXBoZLwVxiIxw==
@@ -111,7 +111,7 @@
     rxjs "6.5.5"
     source-map "0.7.3"
 
-"@angular-devkit/schematics@10.0.0":
+"@angular-devkit/schematics@10.0.0", "@angular-devkit/schematics@^10.0.0":
   version "10.0.0"
   resolved "https://registry.yarnpkg.com/@angular-devkit/schematics/-/schematics-10.0.0.tgz#6ba61092621c25fef78e29c700a7fb3f523b6cc0"
   integrity sha512-FJ/dY18M+cnAT9RkVjVRJ0PMFZci3ok0WoOosW25Fk68jwNSbGCeF8k8NcD6YE60+CfF4/0LxQWgFagr/wdEhw==
@@ -1200,7 +1200,7 @@
   dependencies:
     mkdirp "^1.0.4"
 
-"@schematics/angular@10.0.0", "@schematics/angular@>=8.0.0":
+"@schematics/angular@10.0.0", "@schematics/angular@>=8.0.0", "@schematics/angular@^10.0.0":
   version "10.0.0"
   resolved "https://registry.yarnpkg.com/@schematics/angular/-/angular-10.0.0.tgz#d74ec2207f1beb52c9e91c300495adb4413ed32a"
   integrity sha512-m7Pxz4guAMbe7NASKCPUNxvUX/LeieDjGsXwIt09tVE4dEi9yqJP5zq8kOnZEiLKKflP7GoB65RNex4dTxsydw==

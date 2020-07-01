@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ToastController } from '@ionic/angular';
-import { MessageTypes } from 'src/app/message/message-types';
 import { SocketService } from '../../socket/socket.service';
+import { Store } from '@ngrx/store';
+import { AuthState } from '../../auth/redux/auth.state';
 
 @Component({
   selector: 'app-home',
@@ -9,26 +9,12 @@ import { SocketService } from '../../socket/socket.service';
   styleUrls: ['home.component.scss'],
 })
 export class HomeComponent implements OnInit {
-
   constructor(
-    public socketService: SocketService,
-    private toastController: ToastController
+    public store: Store<AuthState>,
+    public socketService: SocketService
   ) {}
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
 
-  handleRoll(): void {
-    this.socketService.emit(MessageTypes.REQUEST_ROLL, async response => {
-      console.log(`Received roll response`);
-      console.log(response);
-      const toast = await this.toastController.create({
-        animated: true,
-        duration: 2000,
-        header: 'Roll Result!',
-        message: response.result.total
-      });
-
-      toast.present();
-    });
   }
 }

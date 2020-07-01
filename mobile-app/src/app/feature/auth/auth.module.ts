@@ -7,6 +7,7 @@ import { authReducer } from './redux/auth.reducers';
 import { authStateKey } from './redux/auth.state';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './auth.effects';
+import { CommonModule } from '@angular/common';
 
 const routes: Routes = [
   { path: '', component: ChooseUserComponent }

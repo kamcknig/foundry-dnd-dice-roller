@@ -1,3 +1,12 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Foundry Companion</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+    <app-apps-menu *ngIf="user$ | async" slot="fixed"></app-apps-menu>
+    <ion-router-outlet></ion-router-outlet>
+  </ion-content>
 </ion-app>

@@ -1,72 +1,130 @@
 const io = require('socket.io')(8082);
 
-let connections = new Map();
-
-let users = new Map();
+/**
+ * A Map of the socket connections from mobile applications.
+ * Keys are the socket IDs and values are the Foundry User intance
+ * _ids
+ */
+let mobileConnections = new Map();
 
 /**
- * Create the default namespace. This is where the mobile devices connect
+ * A Map of the socket connections from Foundry applications.
+ * Keys are the socket IDs and values are the Foundry User intance
+ * _ids
  */
-io.on('connection', async (socket) => {
-	console.log(`Socket server - client '${socket.id}' connected to default namespace`);
-	connections.set(socket.id, socket);
+let foundryConnections = new Map();
 
+/**
+ * A Map of Foundry User instances
+ */
+let foundryUsers = new Set();
+
+function getFoundrySocketIdByUserId(userId) {
+	const entries = foundryConnections.entries();
+	let entry = entries.next();
+	while (!entry.done) {
+		if (entry.value[1] === userId) {
+			return entry.value[0];
+		}
+		entry = entries.next();
+	}
+	return undefined;
+}
+
+// Create the mobile namespace. Mobile applications connect to this namespace
+const mobileNsp = io.of('/mobile');
+
+/**
+ * Listens for connections on the mobile namespace.
+ */
+mobileNsp.on('connection', socket => {
+	console.log(`mobile app ${socket.id} as connected to server`);
+
+	// listen for mobile applications disconnecting from the server and remove it from the mobile
+	// connections Map
 	socket.on('disconnect', reason => {
-		console.log(`Socket server - '${socket.id}' disconnected from default namesapce`);
+		console.log(`'${socket.id}' disconnected from default namesapce`);
 		console.log(`Reason '${reason}'`);
-		connections.delete(socket.id);
+
+		// get the userId if any associated with this socket
+		const userId = mobileConnections.get(socket.id);
+
+		const u = Array.from(foundryUsers).find(u => u._id === userId);
+		if (u) {
+			u.selected = false;
+		}
+
+		mobileNsp.emit('user-list', Array.from(foundryUsers).filter(u => !u.selected));
+		mobileConnections.delete(socket.id);
 	});
 
-	// send the user list to the connected device
-	socket.emit('user-list', Array.from(users.values()));
+	// listen for the request-user-list event from the mobile application and respond
+	// with the list of users
+	socket.on('request-user-list', () => {
+		console.log(`${socket.id} requested user list`);
+		socket.emit('user-list', Array.from(foundryUsers).filter(u => !u.selected));
+	});
 
+	socket.on('user-selected', userId => {
+		console.log(`Mobile socket ${socket.id} selected user ${userId}`);
+
+		const u = Array.from(foundryUsers).find(u => u._id === userId);
+		if (u) {
+			u.selected = true;
+		}
+
+		mobileConnections.set(socket.id, userId);
+		mobileNsp.emit('user-list', Array.from(foundryUsers).filter(u => !u.selected));
+	});
+
+	// listen for the request-roll event from the mobile application
 	socket.on('request-roll', async callbackFn => {
-		console.log(`Socket server - Received request for dice roll from '${socket.id}'`);
+		console.log(`Received request for dice roll from '${socket.id}'`);
 
-		// right now it loops through and emits to all foundry instances. Which while testing is simply
-		// one instance. need to be able to 'connect' the phone app to the identity in game
+		const userId = mobileConnections.get(socket.id);
+		const foundrySocketId = getFoundrySocketIdByUserId(userId);
+		const foundrySocket = foundryNsp.connected[foundrySocketId];
+
 		const result = await new Promise(async resolve => {
-			let result = 0;
-			for(const [id, socket] of foundryConnections.entries()) {
-				console.log(`Socket server - emitting 'foundry-roll' to foundry namespace connections`);
-				result = await new Promise(resolve => socket.emit('foundry-roll', result => resolve(result)));
-			};
-
+			console.log(`emitting 'foundry-roll' event to foundry socket ${foundrySocketId}`);
+			const result = await new Promise(resolve => foundrySocket.emit('foundry-roll', result => resolve(result)));
 			resolve(result);
 		});
 
-		console.log(`Socket server - Received result from foundry`);
+		console.log(`Received result from foundry`);
 		callbackFn(typeof result === 'object' ? result : { result: { total: result } });
 	});
 });
 
-let foundryConnections = new Map();
-
+// create the foundry namespace. FOundry application add-ons connect to this namespace
 const foundryNsp = io.of('/foundry');
 
 foundryNsp.on('connection', socket => {
-	console.log(`Socket server - foundry app '${socket.id}' has connected to server`);
-	foundryConnections.set(socket.id, socket);
+	console.log(`foundry app '${socket.id}' has connected to server`);
 
-	// when a foundry app connects, add that foundry instance's user to the list of users
+	// listen for the add-user event. This event is fired from the foundry app when a user logs in.
 	socket.on('add-user', user => {
-		console.log(`Socket server - Received new user ${user}`);
-		users.set(socket.id, user);
-
-		// emit the new user list to all phone connections
-		for (const [id, socket] of connections) {
-			socket.emit('user-list', Array.from(users.values()));
-		}
+		console.log(`Received new user ${user}`);
+		foundryUsers.add(user);
+		foundryConnections.set(socket.id, user._id);
+		mobileNsp.emit('user-list', Array.from(foundryUsers).filter(u => !u.selected));
 	});
 
 	socket.on('disconnect', reason => {
-		console.log(`Socket server - foundry app '${socket.id}' has disconnected from server`);
-		users.delete(socket.id);
-		foundryConnections.delete(socket.id);
+		console.log(`foundry app '${socket.id}' has disconnected from server. '${reason}'`);
 
-		for (const [id, s] of connections) {
-			// send the user list to the connected device
-			s.emit('user-list', Array.from(users.values()));
+		const userId = foundryConnections.get(socket.id);
+
+		// todo: When a user disconnects from foundry. If a mobile user
+		// had selected/connected to a foundry user and then they disconnect
+		// from foundry, need to remove any functionality that hooks into foundry
+		const u = Array.from(foundryUsers).find(u => u._id === userId)
+		if (u) {
+			u.selected = false
+			foundryUsers.delete(u);
 		}
+
+		foundryConnections.delete(socket.id);
+		mobileNsp.emit('user-list', Array.from(foundryUsers.values()).filter(u => !u.selected));
 	});
 });

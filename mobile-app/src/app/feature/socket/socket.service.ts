@@ -31,14 +31,27 @@ export class SocketService {
   }
 
   private socketConnected = (): void => {
+    console.log('Connected to socket server');
+    this.emit(MessageTypes.REQUEST_USER_LIST);
+
     this._connected$.next(true);
   }
 
   private socketDisconnected = (reason): void => {
+    console.log('Diconnected from socket server');
     this._connected$.next(false);
   }
 
-  public emit(eventName: MessageTypes, callback: (response) => void | Promise<any>, ...args) {
-    this.socket.emit(eventName, ...args, callback);
+  public async emit(eventName: MessageTypes, callback?: (response) => void | Promise<any>, ...args) {
+    if (!args) {
+      args = [];
+    }
+
+    if (callback) {
+      await this.socket.emit(eventName, ...args, callback);
+      return;
+    }
+
+    this.socket.emit(eventName, ...args);
   }
 }

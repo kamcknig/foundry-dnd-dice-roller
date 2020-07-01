@@ -13,6 +13,8 @@
   },
   "private": true,
   "dependencies": {
+    "@angular-devkit/core": "^10.0.0",
+    "@angular-devkit/schematics": "^10.0.0",
     "@angular/animations": "^10.0.0",
     "@angular/cdk": "^10.0.0",
     "@angular/common": "^10.0.0",
@@ -33,6 +35,7 @@
     "@ngrx/effects": "^9.2.0",
     "@ngrx/store": "^9.2.0",
     "@ngrx/store-devtools": "^9.2.0",
+    "@schematics/angular": "^10.0.0",
     "ngx-socket-io": "^3.0.1",
     "rxjs": "~6.5.1",
     "tslib": "^2.0.0",

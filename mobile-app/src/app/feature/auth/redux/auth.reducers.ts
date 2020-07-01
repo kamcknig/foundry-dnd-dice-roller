@@ -4,10 +4,10 @@ import { initialState, AuthState } from './auth.state';
 
 const reducer = createReducer(
   initialState,
-  on(userSelected, (state = initialState, action) => ({
+  on(userSelected, (state = initialState, user) => ({
     ...state,
     user: {
-      ...action
+      ...user
     }
   }))
 );

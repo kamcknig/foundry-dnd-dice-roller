@@ -19,12 +19,15 @@ import { SharedModule } from './feature/shared/shared.module';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
 import { EffectsModule } from '@ngrx/effects';
+import { HomeModule } from './feature/home/home.module';
+import { AppsMenuComponent } from './apps-menu/apps-menu.component';
 
 // https://foundry-api2.turkeysunite.com
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    AppsMenuComponent
   ],
   entryComponents: [],
   imports: [
@@ -32,7 +35,7 @@ import { EffectsModule } from '@ngrx/effects';
     FlexLayoutModule,
     HttpClientModule,
     SocketIoModule.forRoot({
-      url: 'http://localhost:8082'
+      url: 'http://localhost:8082/mobile'
     }),
     IonicModule.forRoot(),
     StoreModule.forRoot({}, {}),
@@ -40,6 +43,7 @@ import { EffectsModule } from '@ngrx/effects';
     SharedModule,
     AppRoutingModule,
     AuthModule,
+    HomeModule,
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
   ],
@@ -47,6 +51,9 @@ import { EffectsModule } from '@ngrx/effects';
     StatusBar,
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy }
+  ],
+  exports: [
+    AppsMenuComponent
   ],
   bootstrap: [AppComponent]
 })
