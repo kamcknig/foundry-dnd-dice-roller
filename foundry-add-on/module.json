@@ -1,0 +1,17 @@
+{
+	"name": "mobile-dice-roller",
+	"title": "Mobile Dice Roller",
+	"description": "Used to roll dice in Foundry from your mobile device",
+	"author": "kamcknig",
+	"version": "1.0.0",
+	"minimumCoreVersion" : "0.6.2",
+	"compatibleCoreVersion": "0.6.2",
+	"esmodules": [
+		"./scripts/main.js"
+	],
+	"url": "https://github.com/kamcknig/mobile-dice-roller",
+	"download": "https://github.com/kamcknig/mobile-dice-roller/archive/v1.0.0-alpha.zip",
+	"manifest": "https://github.com/kamcknig/mobile-dice-roller/blob/master/module.json",
+	"changelog": "https://github.com/kamcknig/mobile-dice-roller/releases",
+	"bugs": "https://github.com/kamcknig/mobile-dice-roller/issues"
+}
