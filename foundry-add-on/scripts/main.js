@@ -20,9 +20,10 @@ const CHAT_MESSAGE_TYPES = {
 };
 **/
 Hooks.on("init", function() {
+	log(`init hook`);
+
 	CONFIG.debug.hooks = true;
 	CONFIG.mobileDiceRollerDebug = true;
-	log(`init hook`);
 
 	const scriptRef = document.createElement('script');
 	scriptRef.setAttribute('type', 'text/javascript');
@@ -49,6 +50,18 @@ window.socketLibraryLoaded = () => {
 	//foundry-api2.turkeysunite.com
 	socket = io(`${game.settings.get('mobile-dice-roller', 'host')}/foundry`);
 
+	socket.once('send-token', token => {
+		log(`Received token '${token}'`);
+		const chatData = {
+      content: `Use code ${token} in the mobile app to connect.`,
+      speaker: {
+        scene: null, actor: null, token: null, alias: 'Foundry Mobile Companion',
+      },
+      whisper: [game.userId],
+    };
+    ChatMessage.create(chatData, {});
+	});
+
 	socket.on('connect', () => {
 		log('Connected to socket server');
 
@@ -57,10 +70,6 @@ window.socketLibraryLoaded = () => {
 		if (game.user) {
 			socket.emit('add-user', game.user);
 		}
-
-		socket.on('addon-dice-roll', (callbackFn) => {
-			log(`Received 'addon-dice-roll' event`);
-		});
 
 		socket.on('foundry-roll', (callbackFn) => {
 			log(`Received 'founldry-roll' event`);
@@ -88,14 +97,14 @@ window.socketLibraryLoaded = () => {
 	});
 }
 
-Hooks.on('renderPlayerList', (playerListApp, html, users) => {
-	socket.emit('user-list', users.users);
-});
+// Hooks.on('renderPlayerList', (playerListApp, html, users) => {
+// 	socket.emit('user-list', users.users);
+// });
 
-Hooks.on('renderChatMessage', (chatMsg, html, msgData) => {
-	console.log(chatMsg);
-	console.log(msgData);
-});
+// Hooks.on('renderChatMessage', (chatMsg, html, msgData) => {
+// 	console.log(chatMsg);
+// 	console.log(msgData);
+// });
 
 function log(msg) {
 	if (!!CONFIG.mobileDiceRollerDebug) {

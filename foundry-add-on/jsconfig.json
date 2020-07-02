@@ -1,5 +1,5 @@
 {
 	"compilerOptions": {
-		"types": ["foundry-pc-types", "@types/howler"]
+		"types": ["foundry-pc-types", "@types/socket.io", "@types/socket.io-client"]
 	}
 }
