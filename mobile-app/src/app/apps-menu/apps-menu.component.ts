@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User, USER_ROLES } from '../foundry/foundry.models';
+import { User, USER_ROLES } from '../feature/foundry/foundry.models';
 import { Store, select } from '@ngrx/store';
 import { AuthState } from '../feature/auth/redux/auth.state';
 import { ToastController } from '@ionic/angular';
 import { SocketService } from '../feature/socket/socket.service';
 import { selectUser } from '../feature/auth/redux/auth.selectors';
-import { MessageTypes } from '../message/message-types';
 
 
 @Component({

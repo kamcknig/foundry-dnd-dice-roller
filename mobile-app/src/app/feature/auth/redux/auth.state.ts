@@ -1,5 +1,5 @@
 import { AppState } from 'src/app/redux/app.reducers';
-import { User } from 'src/app/foundry/foundry.models';
+import { User } from 'src/app/feature/foundry/foundry.models';
 
 export const authStateKey: string = 'auth';
 

@@ -1,40 +1,43 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { MessageTypes } from 'src/app/message/message-types';
-import { tap } from 'rxjs/operators';
-import { User } from 'src/app/foundry/foundry.models';
+import { takeUntil } from 'rxjs/operators';
+import { User } from '../foundry/foundry.models';
+import { Store } from '@ngrx/store';
+import { FoundryState } from '../foundry/redux/foundry.state';
+import { foundryUserListReceived } from '../foundry/redux/foundry.actions';
 
 @Injectable({
   providedIn: 'root'
 })
-export class SocketService {
+export class SocketService implements OnDestroy {
+  private _destroy$: Subject<void> = new Subject<void>();
   private _connected$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
   public connected$: Observable<boolean> = this._connected$.asObservable();
 
-  public users$: Observable<any>;
-
-  constructor(private socket: Socket) {
+  constructor(
+    private _socket: Socket,
+    private _store: Store<FoundryState>
+  ) {
     console.log('Socket service created');
 
-    this.socket.on('connect', this.socketConnected);
-    this.socket.on('disconnect', this.socketDisconnected);
+    this._socket.on('connect', this.socketConnected);
+    this._socket.on('disconnect', this.socketDisconnected);
 
     // observable to obtain the up-to-date users list when the server sends it
-    this.users$ = this.socket.fromEvent(MessageTypes.USER_LIST).pipe(
-      tap(users => {
-        users.forEach((u: User) => {
-          console.log(u);
-        });
-      })
-    );
+    this._socket.fromEvent<User[]>(MessageTypes.USER_LIST).pipe(
+      takeUntil(this._destroy$)
+    ).subscribe(users => {
+      this._store.dispatch(foundryUserListReceived({ users }));
+    })
   }
 
   private socketConnected = (): void => {
     console.log('Connected to socket server');
-    this.emit(MessageTypes.REQUEST_USER_LIST);
-
     this._connected$.next(true);
+    this.emit(MessageTypes.REQUEST_USER_LIST);
   }
 
   private socketDisconnected = (reason): void => {
@@ -49,7 +52,7 @@ export class SocketService {
 
     if (callback) {
       const result = await new Promise<T>(
-        resolve => this.socket.emit(
+        resolve => this._socket.emit(
           eventName,
           ...args,
           (...resultArgs) => resolve(resultArgs.length === 1 ? resultArgs[0] : (resultArgs.length === 0 ? undefined : resultArgs))
@@ -58,6 +61,11 @@ export class SocketService {
       return result;
     }
 
-    this.socket.emit(eventName, ...args);
+    console.log(`Emitting ${eventName} to socket server`);
+    this._socket.emit(eventName, ...args);
+  }
+
+  public ngOnDestroy(): void {
+    this._destroy$.next();
   }
 }

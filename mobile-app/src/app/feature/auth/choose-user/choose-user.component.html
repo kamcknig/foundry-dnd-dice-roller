@@ -1,8 +1,11 @@
 <ion-content>
   <div fxLayout="row" fxLayoutAlign="space-around center" style="height: 100%;">
-    <ion-item style="width: 75%" slot="fixed">
+    <ion-item *ngIf="(userList$ | async).length > 0 else noUsers" class="token-entry" slot="fixed">
       <ion-label position="floating">Enter Token</ion-label>
       <ion-input #input (keydown)="handleSubmit($event, input.value)" maxlength="4" clearInput type="text"></ion-input>
     </ion-item>
+    <ng-template #noUsers>
+      <p>There are no users logged into the Foundry instance. Please log in and retrieve your token.</p>
+    </ng-template>
   </div>
 </ion-content>

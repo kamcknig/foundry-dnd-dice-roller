@@ -4,7 +4,7 @@ import { tokenEntered, userAuthenticated } from './redux/auth.actions';
 import { switchMap, map, tap} from 'rxjs/operators';
 import { SocketService } from '../socket/socket.service';
 import { MessageTypes } from 'src/app/message/message-types';
-import { User } from 'src/app/foundry/foundry.models';
+import { User } from 'src/app/feature/foundry/foundry.models';
 import { noop } from 'src/app/redux/app.actions';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';

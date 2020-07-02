@@ -22,6 +22,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { HomeModule } from './feature/home/home.module';
 import { AppsMenuComponent } from './apps-menu/apps-menu.component';
 import { CommonModule } from '@angular/common';
+import { FoundryModule } from './feature/foundry/foundry.module';
 
 // https://foundry-api2.turkeysunite.com
 
@@ -46,7 +47,8 @@ import { CommonModule } from '@angular/common';
     AuthModule,
     HomeModule,
     EffectsModule.forRoot([]),
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production })
+    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
+    FoundryModule
   ],
   providers: [
     StatusBar,
@@ -60,6 +62,6 @@ import { CommonModule } from '@angular/common';
 })
 export class AppModule {
   constructor(private router: Router) {
-    router.events.subscribe(value => console.log(value));
+    // router.events.subscribe(value => console.log(value));
   }
 }

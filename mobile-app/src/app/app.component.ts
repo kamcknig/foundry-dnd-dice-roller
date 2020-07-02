@@ -7,7 +7,7 @@ import { Store } from '@ngrx/store';
 import { AuthState } from './feature/auth/redux/auth.state';
 import { selectUser } from './feature/auth/redux/auth.selectors';
 import { Observable } from 'rxjs';
-import { User } from './foundry/foundry.models';
+import { User } from './feature/foundry/foundry.models';
 
 @Component({
   selector: 'app-root',

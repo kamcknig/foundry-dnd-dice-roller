@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { User } from 'src/app/foundry/foundry.models';
+import { User } from 'src/app/feature/foundry/foundry.models';
 
 export enum AuthActions {
   TOKEN_ENTERED = 'Token Entered',
