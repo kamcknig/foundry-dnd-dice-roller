@@ -42,6 +42,7 @@ Hooks.on("init", function() {
 Hooks.on('ready', () => {
 	log('ready hook');
 	chatLog = window.ui.chat;
+	log(chatLog);
 });
 
 window.socketLibraryLoaded = () => {
@@ -85,6 +86,12 @@ window.socketLibraryLoaded = () => {
 			}, { rollMode });
 
 			callbackFn(roll.total);
+		});
+
+		socket.on('request-journal-entries', (journalId, callbackFn) => {
+			log(`Request for journal entries ${journalId}`);
+			const entries = game.journal.entities.filter(j => j.permission > 0);
+			callbackFn(entries);
 		});
 	});
 

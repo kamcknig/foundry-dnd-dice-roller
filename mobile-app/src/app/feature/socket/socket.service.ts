@@ -21,8 +21,6 @@ export class SocketService implements OnDestroy {
     private _socket: Socket,
     private _store: Store<FoundryState>
   ) {
-    console.log('Socket service created');
-
     this._socket.on('connect', this.socketConnected);
     this._socket.on('disconnect', this.socketDisconnected);
 

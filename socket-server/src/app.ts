@@ -1,5 +1,5 @@
 import { Socket, Namespace, Server } from "socket.io";
-import { Connection, User } from "./connection.model";
+import { Connection, User, JournalEntry } from "./connection.model";
 
 const io: Server = require('socket.io')(8082);
 
@@ -52,19 +52,21 @@ mobileNsp.on('connection', (mobileSocket: Socket) => {
 	// listen for the request-roll event from the mobile application
 	mobileSocket.on('request-roll', async (callbackFn: Function) => {
 		console.log(`Received request for dice roll from '${mobileSocket.id}'`);
-
 		const connection = getConnFromMobileSocket(mobileSocket);
 		const foundrySocket = connection.foundrySocket;
-
-		const result = await new Promise(async resolve => {
-			console.log(`emitting 'foundry-roll' event to foundry socket ${foundrySocket.id}`);
-			const result = await new Promise(resolve => foundrySocket.emit('foundry-roll', (result: any) => resolve(result)));
-			resolve(result);
-		});
+		const result = await new Promise(resolve => foundrySocket.emit('foundry-roll', (result: any) => resolve(result)));
 
 		console.log(`Received result from foundry`);
 		callbackFn(typeof result === 'object' ? result : { result: { total: result } });
 	});
+
+	mobileSocket.on('request-journal-entries', async (journalId: number = NaN, callbackFn: Function) => {
+		console.log(`Received request for journal entr${journalId ? 'y' : 'ies'} ${journalId ? journalId + ' ' : ''}from ${mobileSocket.id}`);
+		const connection = getConnFromMobileSocket(mobileSocket);
+		const foundrySocket = connection.foundrySocket;
+		const result = await new Promise(resolve => foundrySocket.emit('request-journal-entries', journalId, (result: any) => resolve(result)));
+		callbackFn(result);
+	})
 });
 
 

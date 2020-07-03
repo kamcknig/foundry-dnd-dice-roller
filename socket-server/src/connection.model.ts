@@ -26,3 +26,7 @@ export enum USER_ROLES {
   ASSISTANT,
   GAMEMASTER
 }
+
+export interface JournalEntry {
+  name: string;
+}
