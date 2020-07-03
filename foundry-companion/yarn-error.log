@@ -1,0 +1,50 @@
+Arguments: 
+  D:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add @typescript --dev
+
+PATH: 
+  C:\Program Files (x86)\Razer Chroma SDK\bin;C:\Program Files\Razer Chroma SDK\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\system32\config\systemprofile\AppData\Local\Microsoft\WindowsApps;D:\development\ant\bin;C:\Users\kamck\.dnx\bin;C:\Program Files\Microsoft DNX\Dnvm\;C:\Program Files\Microsoft SQL Server\130\Tools\Binn\;D:\development\android_sdk\tools;D:\development\android_sdk\platform-tools;D:\Python27;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;D:\Program Files\PuTTY\;D:\development\java\jdk1.8.0_221\bin;D:\Python27\Scripts;D:\ffmpeg-3.4.2-win64-static\bin;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files (x86)\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\Intel(R) Management Engine Components\DAL;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Program Files\dotnet\;D:\development\php\php-7.4.0-Win32-vc15-x64;D:\Program Files\nodejs\;C:\Program Files (x86)\Yarn\bin\;C:\Program Files (x86)\ZeroTier\One\;C:\Program Files\Git\cmd;C:\Users\kamck\AppData\Local\Microsoft\WindowsApps;C:\Users\kamck\AppData\Local\Programs\Fiddler;D:\Program Files\Microsoft VS Code\bin;C:\Program Files\Intel\WiFi\bin\;C:\Program Files\Common Files\Intel\WirelessCommon\;C:\Users\kamck\AppData\Local\GitHubDesktop\bin;C:\Users\kamck\AppData\Roaming\npm;C:\Users\kamck\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\kamck\AppData\Local\Yarn\bin;%USERPROFILE%\AppData\Local\Microsoft\WindowsApps;
+
+Yarn version: 
+  1.22.4
+
+Node version: 
+  12.14.1
+
+Platform: 
+  win32 x64
+
+Trace: 
+  Error: Error connecting to repository. Please, check the url.
+      at GitLabResolver.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:33689:15)
+      at Generator.next (<anonymous>)
+      at step (C:\Program Files (x86)\Yarn\lib\cli.js:310:30)
+      at C:\Program Files (x86)\Yarn\lib\cli.js:321:13
+      at processTicksAndRejections (internal/process/task_queues.js:94:5)
+
+npm manifest: 
+  {
+    "name": "foundry-companion",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "devDependencies": {
+      "foundry-pc-types": "gitlab:foundry-projects/foundry-pc/foundry-pc-types"
+    },
+    "scripts": {
+      "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "",
+    "license": "ISC",
+    "types": "node_modules/foundry-pc-types/index.d.ts",
+    "dependencies": {
+      "@types/socket.io-client": "^1.4.33",
+      "socket.io": "^2.3.0",
+      "socket.io-client": "^2.3.0"
+    }
+  }
+
+yarn manifest: 
+  No manifest
+
+Lockfile: 
+  No lockfile

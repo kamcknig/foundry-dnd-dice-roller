@@ -18,5 +18,6 @@ export class JournalComponent implements OnInit {
 
   ngOnInit(): void {
     this.journalEntries$ = this._route.data.pipe<JournalEntry[] | Partial<JournalEntry>[]>(map(d => d.journal));
+    this.journalEntries$.subscribe(value => console.log(value));
   }
 }
