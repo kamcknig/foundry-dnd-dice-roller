@@ -11,7 +11,7 @@
 	],
 	"url": "https://github.com/kamcknig/mobile-dice-roller",
 	"download": "https://github.com/kamcknig/mobile-dice-roller/archive/v1.0.0-alpha.zip",
-	"manifest": "https://github.com/kamcknig/mobile-dice-roller/blob/master/module.json",
+	"manifest": "https://raw.githubusercontent.com/kamcknig/foundry-dnd-dice-roller/develop/foundry-add-on/module.json",
 	"changelog": "https://github.com/kamcknig/mobile-dice-roller/releases",
 	"bugs": "https://github.com/kamcknig/mobile-dice-roller/issues"
 }
