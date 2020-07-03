@@ -9,9 +9,9 @@
 	"esmodules": [
 		"./scripts/main.js"
 	],
-	"url": "https://github.com/kamcknig/mobile-dice-roller",
-	"download": "https://github.com/kamcknig/mobile-dice-roller/archive/v1.0.0-alpha.zip",
-	"manifest": "https://github.com/kamcknig/mobile-dice-roller/blob/master/module.json",
-	"changelog": "https://github.com/kamcknig/mobile-dice-roller/releases",
-	"bugs": "https://github.com/kamcknig/mobile-dice-roller/issues"
+	"url": "https://github.com/kamcknig/foundry-dnd-dice-roller",
+	"download": "https://github.com/kamcknig/foundry-dnd-dice-roller/archive/v1.0.0-alpha.zip",
+	"manifest": "https://raw.githubusercontent.com/kamcknig/foundry-dnd-dice-roller/master/foundry-add-on/module.json",
+	"changelog": "https://github.com/kamcknig/foundry-dnd-dice-roller/releases",
+	"bugs": "https://github.com/kamcknig/foundry-dnd-dice-roller/issues"
 }
