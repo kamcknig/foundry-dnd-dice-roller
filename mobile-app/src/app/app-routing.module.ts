@@ -1,15 +1,23 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import { AuthGuard as AuthGuard } from './guards/auth-guard.guard';
+import { AuthModule } from './feature/auth/auth.module';
+import { HomeModule } from './feature/home/home.module';
+import { JournalModule } from './feature/journal/journal.module';
 
 const routes: Routes = [
   {
     path: 'login',
-    loadChildren: () => import('./feature/auth/auth.module').then( m => m.AuthModule)
+    loadChildren: (): Promise<AuthModule> => import('./feature/auth/auth.module').then( m => m.AuthModule)
   },
   {
     path: 'home',
-    loadChildren: () => import('./feature/home/home.module').then( m => m.HomeModule),
+    loadChildren: (): Promise<HomeModule> => import('./feature/home/home.module').then( m => m.HomeModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'journal',
+    loadChildren: (): Promise<JournalModule> => import('./feature/journal/journal.module').then( m => m.JournalModule),
     canActivate: [AuthGuard]
   },
   {

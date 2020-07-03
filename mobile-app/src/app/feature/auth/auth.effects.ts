@@ -4,24 +4,17 @@ import { tokenEntered, userAuthenticated } from './redux/auth.actions';
 import { switchMap, map, tap} from 'rxjs/operators';
 import { SocketService } from '../socket/socket.service';
 import { MessageTypes } from 'src/app/message/message-types';
-import { User } from 'src/app/feature/foundry/foundry.models';
 import { noop } from 'src/app/redux/app.actions';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
+import { User } from '../foundry/foundry.models';
 
 @Injectable()
 export class AuthEffects {
-  constructor(
-    private _actions$: Actions,
-    private _router: Router,
-    private _socketService: SocketService,
-    private _toastController: ToastController
-  ) {}
-
   tokenEntered$ = createEffect(() =>
     this._actions$.pipe(
       ofType(tokenEntered),
-      switchMap(async ({ token }) => await this._socketService.emit<User>(MessageTypes.TOKEN_ENTERED, true, token)),
+      switchMap(async ({ token }): Promise<User> => await this._socketService.emit<User>(MessageTypes.TOKEN_ENTERED, true, token)),
       tap(async user => {
         if (!user) {
           const toast = await this._toastController.create({
@@ -31,17 +24,26 @@ export class AuthEffects {
             message: 'Incorrect token entered'
           });
 
-          toast.present();
+          void toast.present();
         }
       }),
-      map(user => user ? userAuthenticated(user) : noop())
+      map(user => user ? userAuthenticated({ user }) : noop())
     )
   );
 
   userAuthenticated$ = createEffect(() =>
     this._actions$.pipe(
       ofType(userAuthenticated),
-      tap(() => this._router.navigate(['/home']))
+      tap(() => {
+        void this._router.navigate(['/home']);
+      })
     ), { dispatch: false }
   )
+
+  constructor(
+    private _actions$: Actions,
+    private _router: Router,
+    private _socketService: SocketService,
+    private _toastController: ToastController
+  ) {}
 }

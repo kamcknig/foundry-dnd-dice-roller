@@ -7,10 +7,10 @@ module.exports = {
   ignorePatterns: [],
   parser: '@typescript-eslint/parser',
   parserOptions: {
-    project: 'tsconfig.json',
+    project: 'tsconfig.app.json',
     sourceType: 'module'
   },
-  plugins: ['import', 'prefer-arrow', 'eslint-plugin-import', '@typescript-eslint', '@typescript-eslint/tslint'],
+  plugins: ['import', 'prefer-arrow', 'eslint-plugin-import', '@typescript-eslint/eslint-plugin', '@typescript-eslint/tslint'],
   rules: {
     '@typescript-eslint/array-type': 'off',
     '@typescript-eslint/explicit-member-accessibility': [
@@ -169,11 +169,11 @@ module.exports = {
     'prefer-rest-params': ['error'],
     'prefer-spread': ['error'],
     '@typescript-eslint/adjacent-overload-signatures': ['error'],
-    '@typescript-eslint/ban-ts-ignore': ['error'],
+    '@typescript-eslint/ban-ts-comment': ['error'],
     '@typescript-eslint/ban-types': ['error'],
     camelcase: ['off'],
     '@typescript-eslint/camelcase': ['off'],
-    '@typescript-eslint/class-name-casing': ['error'],
+    '@typescript-eslint/naming-convention': ['off'],
     '@typescript-eslint/consistent-type-assertions': ['error'],
     '@typescript-eslint/explicit-function-return-type': ['warn'],
     '@typescript-eslint/member-delimiter-style': ['error'],
@@ -181,7 +181,12 @@ module.exports = {
     '@typescript-eslint/no-array-constructor': ['error'],
     'no-empty-function': ['off'],
     '@typescript-eslint/no-empty-interface': ['error'],
-    '@typescript-eslint/no-misused-new': ['error'],
+    '@typescript-eslint/no-misused-new': [
+      'error',
+      {
+        'checksVoidReturn': false
+      }
+    ],
     '@typescript-eslint/no-namespace': ['error'],
     '@typescript-eslint/no-this-alias': ['error'],
     'no-unused-vars': ['off'],

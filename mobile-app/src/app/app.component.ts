@@ -26,12 +26,12 @@ export class AppComponent implements OnInit {
     this.initializeApp();
   }
 
-  ngOnInit() {
-    this.user$ = this._store.select(selectUser);
+  ngOnInit(): void {
+    this.user$ = this._store.select<User>(selectUser);
   }
 
-  initializeApp() {
-    this._platform.ready().then(() => {
+  initializeApp(): void {
+    void this._platform.ready().then(() => {
       this._statusBar.styleDefault();
       this._splashScreen.hide();
     });

@@ -10,7 +10,7 @@
       <ion-icon style="font-size: 26px;" src="/assets/d20.svg" (click)="handleRoll()"></ion-icon>
     </ion-fab-button>
 
-    <ion-fab-button *ngIf="(user$ | async)?.role === userRoles.GAMEMASTER" data-desc="Journal">
+    <ion-fab-button data-desc="Journal">
       <ion-icon name="book"></ion-icon>
     </ion-fab-button>
   </ion-fab-list>

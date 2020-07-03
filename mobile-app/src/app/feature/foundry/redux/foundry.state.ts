@@ -1,5 +1,5 @@
-import { User } from '../foundry.models';
 import { AppState } from 'src/app/redux/app.reducers';
+import { User } from '../foundry.models';
 
 export const foundryStateKey: string = 'foundry';
 

@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { User, USER_ROLES } from '../feature/foundry/foundry.models';
 import { Store, select } from '@ngrx/store';
 import { AuthState } from '../feature/auth/redux/auth.state';
 import { ToastController } from '@ionic/angular';
 import { SocketService } from '../feature/socket/socket.service';
 import { selectUser } from '../feature/auth/redux/auth.selectors';
-
+import { UserRoles, User } from '../feature/foundry/foundry.models';
 
 @Component({
   selector: 'app-apps-menu',
@@ -15,7 +14,7 @@ import { selectUser } from '../feature/auth/redux/auth.selectors';
 })
 export class AppsMenuComponent implements OnInit {
   public user$: Observable<User>;
-  public userRoles = USER_ROLES;
+  public userRoles = UserRoles;
 
   constructor(
     private _store: Store<AuthState>,
@@ -23,8 +22,8 @@ export class AppsMenuComponent implements OnInit {
     public socketService: SocketService,
   ) { }
 
-  ngOnInit() {
-    this.user$ = this._store.pipe(select(selectUser));
+  ngOnInit(): void {
+    this.user$ = this._store.pipe<User>(select(selectUser));
   }
 
   async handleRoll(): Promise<void> {

@@ -10,7 +10,7 @@ export interface User {
   _id: string;
 }
 
-export enum USER_ROLES {
+export enum UserRoles {
   NONE,
   PLAYER,
   TRUSTED,

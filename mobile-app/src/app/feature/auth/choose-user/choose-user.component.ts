@@ -23,10 +23,10 @@ export class ChooseUserComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    this.userList$ = this._store.pipe(select(selectFoundryUsers));
+    this.userList$ = this._store.pipe<User[]>(select(selectFoundryUsers));
   }
 
-  public handleSubmit(event: KeyboardEvent, token: string):void {
+  public handleSubmit(event: KeyboardEvent, token: string): void {
     if (event.keyCode !== 13) {
       return;
     }
