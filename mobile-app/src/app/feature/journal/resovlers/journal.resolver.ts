@@ -6,7 +6,7 @@ import { SocketService } from '../../socket/socket.service';
 import { MessageTypes } from 'src/app/message/message-types';
 
 @Injectable({ providedIn: 'root' })
-export class JournalResolver implements Resolve<Partial<JournalEntry>[] | JournalEntry[]> {
+export class JournalResolver implements Resolve<JournalEntry[] | Partial<JournalEntry>[]> {
   constructor(
     private _socketService: SocketService
   ) {}
@@ -14,8 +14,10 @@ export class JournalResolver implements Resolve<Partial<JournalEntry>[] | Journa
   resolve(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot,
-  ): Observable<Partial<JournalEntry>[] | JournalEntry[]> {
+  ): Observable<Partial<JournalEntry[] | Partial<JournalEntry>[]>> {
+    const journalId = route.paramMap.get('journalId') ?? NaN;
+
     // TODO: check for journal ID in route param. Get specfic journal entry if so
-    return from(this._socketService.emit<JournalEntry[] | Partial<JournalEntry>[]>(MessageTypes.REQUEST_JOURNAL_ENTRIES, true, NaN));
+    return from(this._socketService.emit<JournalEntry[] | Partial<JournalEntry>[]>(MessageTypes.REQUEST_JOURNAL_ENTRIES, true, journalId));
   }
 }

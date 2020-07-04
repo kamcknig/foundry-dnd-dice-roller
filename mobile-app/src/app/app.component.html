@@ -13,7 +13,7 @@
   </ion-header>
 
   <ion-content>
-    <app-apps-menu *ngIf="user$ | async" slot="fixed"></app-apps-menu>
-    <ion-router-outlet></ion-router-outlet>
+    <app-apps-menu *ngIf="user$ | async"></app-apps-menu>
+    <ion-router-outlet animated="false"></ion-router-outlet>
   </ion-content>
 </ion-app>

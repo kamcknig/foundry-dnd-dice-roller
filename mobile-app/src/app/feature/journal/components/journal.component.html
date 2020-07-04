@@ -1,9 +1,17 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>journal</ion-title>
+    <ion-title>Jounral Entries</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <mat-accordion multi>
+    <mat-expansion-panel *ngFor="let jEntry of journalEntries$ | async">
+      <mat-expansion-panel-header>
+        {{jEntry.name}}
+      </mat-expansion-panel-header>
+      <div [innerHTML]="jEntry.content"></div>
+    </mat-expansion-panel>
+  </mat-accordion>
 </ion-content>
+
