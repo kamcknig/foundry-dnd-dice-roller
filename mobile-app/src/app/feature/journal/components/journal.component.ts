@@ -12,6 +12,8 @@ import { JournalEntry } from '../journal-entry.model';
 export class JournalComponent implements OnInit {
   public journalEntries$: Observable<JournalEntry[] | Partial<JournalEntry>[]>;
 
+  panelOpenState: boolean;
+
   constructor(
     private _route: ActivatedRoute
   ) { }

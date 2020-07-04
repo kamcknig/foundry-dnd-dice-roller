@@ -1,8 +1,8 @@
 <ion-content>
-  <ion-fab
+  <ion-label
     *ngIf="(socketService.connected$ | async) === false"
     style="width: 100%; text-align: center;"
-    vertical="center">
-    <ion-label color="primary">NOT CONNECTED</ion-label>
-  </ion-fab>
+    color="primary">
+      NOT CONNECTED
+    </ion-label>
 </ion-content>
