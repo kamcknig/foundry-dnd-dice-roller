@@ -1092,6 +1092,13 @@
   dependencies:
     "@types/cordova" latest
 
+"@ionic-native/native-audio@^5.27.0":
+  version "5.27.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/native-audio/-/native-audio-5.27.0.tgz#1658a72cb5b0fb56ba9b2e6947c3975f87cd211d"
+  integrity sha512-GFuX8v92XWzEy32nWNAHJEBOghnabVO/vDlw/4ECySXAyU2GyMZYF+AoPK3MveZ12hEPqJEQk+3n9NOStUysPw==
+  dependencies:
+    "@types/cordova" latest
+
 "@ionic-native/splash-screen@^5.27.0":
   version "5.27.0"
   resolved "https://registry.yarnpkg.com/@ionic-native/splash-screen/-/splash-screen-5.27.0.tgz#d2aa69808e9eff3b4bc79b95c58864a5539a535e"
@@ -2969,6 +2976,11 @@ copy-webpack-plugin@6.0.3:
     schema-utils "^2.7.0"
     serialize-javascript "^4.0.0"
     webpack-sources "^1.4.3"
+
+cordova-plugin-nativeaudio@^3.0.9:
+  version "3.0.9"
+  resolved "https://registry.yarnpkg.com/cordova-plugin-nativeaudio/-/cordova-plugin-nativeaudio-3.0.9.tgz#16cebfdaee24beb23c05f49713cb8773bc78536c"
+  integrity sha1-Fs6/2u4kvrI8BfSXE8uHc7x4U2w=
 
 core-js-compat@^3.6.2:
   version "3.6.5"

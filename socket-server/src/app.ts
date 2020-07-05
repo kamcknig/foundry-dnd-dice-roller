@@ -66,7 +66,7 @@ mobileNsp.on('connection', (mobileSocket: Socket) => {
 		const foundrySocket = connection.foundrySocket;
 		const result = await new Promise(resolve => foundrySocket.emit('request-journal-entries', journalId, (result: any) => resolve(result)));
 		callbackFn(result);
-	})
+	});
 });
 
 
@@ -117,6 +117,11 @@ foundryNsp.on('connection', socket => {
 		// TODO if the user was selected on a mobile app, probably need to send an event that the user is no longer
 		// available
 	});
+
+	socket.on('update-combat-turn', (user: User) => {
+		console.log(`Received 'update-combat-turn' from '${socket.id}'.`);
+		connections.get(socket.id).mobileSocket.emit('update-combat-turn');
+	})
 });
 
 

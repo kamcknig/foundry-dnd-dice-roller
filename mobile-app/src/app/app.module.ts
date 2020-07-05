@@ -22,6 +22,7 @@ import { EffectsModule } from '@ngrx/effects';
 import { HomeModule } from './feature/home/home.module';
 import { AppsMenuComponent } from './apps-menu/apps-menu.component';
 import { FoundryModule } from './feature/foundry/foundry.module';
+import { CombatModule } from './feature/combat/combat.module';
 
 // https://foundry-api2.turkeysunite.com
 
@@ -43,6 +44,7 @@ import { FoundryModule } from './feature/foundry/foundry.module';
     BrowserAnimationsModule,
     SharedModule,
     AppRoutingModule,
+    CombatModule,
     AuthModule,
     HomeModule,
     EffectsModule.forRoot([]),
