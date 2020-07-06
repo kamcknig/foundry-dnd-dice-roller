@@ -8,6 +8,7 @@ import { authStateKey } from './redux/auth.state';
 import { EffectsModule } from '@ngrx/effects';
 import { AuthEffects } from './auth.effects';
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { CommonModule } from '@angular/common';
 
 const routes: Routes = [
   { path: '', component: ChooseUserComponent }
@@ -18,6 +19,7 @@ const routes: Routes = [
     ChooseUserComponent
   ],
   imports: [
+    CommonModule,
     SharedModule,
     FlexLayoutModule,
     RouterModule.forChild(routes),
