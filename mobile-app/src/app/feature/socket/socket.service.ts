@@ -2,7 +2,7 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { Socket } from 'ngx-socket-io';
 import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { MessageTypes } from 'src/app/message/message-types';
-import { takeUntil } from 'rxjs/operators';
+import { takeUntil, tap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { FoundryState } from '../foundry/redux/foundry.state';
 import { foundryUserListReceived } from '../foundry/redux/foundry.actions';
@@ -29,7 +29,7 @@ export class SocketService implements OnDestroy {
       takeUntil(this._destroy$)
     ).subscribe(users => {
       this._store.dispatch(foundryUserListReceived({ users }));
-    })
+    });
   }
 
   private socketConnected = (): void => {

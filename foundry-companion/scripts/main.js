@@ -104,6 +104,23 @@ window.socketLibraryLoaded = () => {
 	});
 }
 
+/**
+ * combat - Combat instance
+ * turn - turn data { turn: number, _id: number } - shows the turn number and Combat instance ID
+ * data - { diff: boolean } - not sure what this means right now
+ * id - number - not sure what this is the ID of right now
+ */
+Hooks.on('updateCombat', (combat, turn, data, id) => {
+	const turnNumber = combat.current.turn;
+	const turns = combat.turns;
+	turn = turns[turnNumber];
+	const turnPlayers = turn.players;
+	const user = turnPlayers.find(u => u._id === game.user._id);
+	if (user) {
+		socket.emit('update-combat-turn', user);
+	}
+});
+
 // Hooks.on('renderPlayerList', (playerListApp, html, users) => {
 // 	socket.emit('user-list', users.users);
 // });

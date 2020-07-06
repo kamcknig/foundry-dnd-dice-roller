@@ -4,5 +4,6 @@ export enum MessageTypes {
   USER_LIST = 'user-list',
   REQUEST_USER_LIST = 'request-user-list',
   TOKEN_ENTERED = 'token-entered',
-  REQUEST_JOURNAL_ENTRIES = 'request-journal-entries'
+  REQUEST_JOURNAL_ENTRIES = 'request-journal-entries',
+  UPDATE_COMBAT_TURN = 'update-combat-turn'
 }
