@@ -1,0 +1,12 @@
+<ion-content class="ion-padding">
+  <form>
+    <ion-item>
+      <ion-label position="floating">Host:port</ion-label>
+      <ion-input type="text" [value]="host$ | async" [formControl]="hostControl"></ion-input>
+    </ion-item>
+
+    <ion-button role="submit" (click)="onClick()" expand="block" fill="clear" shape="round">
+      Save
+    </ion-button>
+  </form>
+</ion-content>

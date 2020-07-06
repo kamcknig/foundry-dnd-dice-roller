@@ -1,0 +1,16 @@
+<ion-menu side="end" menuId="first" contentId="main">
+  <ion-header>
+    <ion-toolbar color="primary">
+      <ion-title>Setings</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content>
+    <ion-list>
+      <ion-item>
+        <ion-label>Combat turn notifications</ion-label>
+        <ion-toggle [checked]="combatNotifications$ | async" (ionChange)="handleUpdateSetting('combat-turn-notification', $event)" slot="end"></ion-toggle>
+      </ion-item>
+      <ion-item (click)="showUpdateHost()" button>Host/port</ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
