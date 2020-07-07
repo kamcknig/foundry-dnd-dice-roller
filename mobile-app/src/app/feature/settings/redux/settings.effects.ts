@@ -21,7 +21,6 @@ export class SettingsEffects {
         return modal.onWillDismiss<string>();
       }),
       map(({ data: host }) => {
-        console.log(host);
         return updateSetting({ setting: 'host', value: host });
       })
     )

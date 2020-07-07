@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { FormControl } from '@angular/forms';
 import { ModalController } from '@ionic/angular';
-import { FormControl, FormGroup } from '@angular/forms';
+import { select, Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { Store, select } from '@ngrx/store';
-import { SettingsState } from '../../redux/settings.state';
 import { selectSetting } from '../../redux/settings.selectors';
+import { SettingsState } from '../../redux/settings.state';
 
 @Component({
   selector: 'app-update-host-dialog',
@@ -26,7 +26,11 @@ export class UpdateHostDialogComponent implements OnInit {
     this.host$.subscribe(value => this.hostControl.setValue(value));
   }
 
-  onClick(): void {
+  updateHost(event?: KeyboardEvent): void {
+    if (event && !(event.keyCode === 13)) {
+      return;
+    }
+
     this._modalController.dismiss(this.hostControl.value);
   }
 }

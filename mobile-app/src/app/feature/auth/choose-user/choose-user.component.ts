@@ -15,15 +15,16 @@ import { User } from '../../foundry/foundry.models';
 })
 export class ChooseUserComponent implements OnInit {
   public userList$: Observable<User[]>;
+  public connected$: Observable<boolean>;
 
   constructor(
-    public socketService: SocketService,
-    public sanitizer: DomSanitizer,
+    private _socketService: SocketService,
     private _store: Store<AuthState>
   ) {}
 
   public ngOnInit(): void {
     this.userList$ = this._store.pipe<User[]>(select(selectFoundryUsers));
+    this.connected$ = this._socketService.connected$;
   }
 
   public handleSubmit(event: KeyboardEvent, token: string): void {

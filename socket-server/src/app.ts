@@ -10,12 +10,12 @@ const mobileNsp: Namespace = io.of('/mobile');
  * Listens for connections on the mobile namespace.
  */
 mobileNsp.on('connection', (mobileSocket: Socket) => {
-	console.log(`Mobile app '${mobileSocket.id}' as connected to server`);
+	console.log(`Mobile app '${mobileSocket.id}' connected to server`);
 
 	// listen for mobile applications disconnecting from the server and remove it from the mobile
 	// connections Map
 	mobileSocket.on('disconnect', (reason: string) => {
-		console.log(`'${mobileSocket.id}' disconnected from default namesapce '${reason}'`);
+		console.log(`'${mobileSocket.id}' disconnected from mobile namesapce '${reason}'`);
 
 		try {
 			const connection = getConnFromMobileSocket(mobileSocket);
@@ -23,6 +23,7 @@ mobileNsp.on('connection', (mobileSocket: Socket) => {
 		}
 		catch (e) {
 			console.log(`Mobile app '${mobileSocket.id}' not found in foundry connections`);
+			console.log(e);
 		}
 
 		mobileNsp.emit('user-list', usersAsArray());
