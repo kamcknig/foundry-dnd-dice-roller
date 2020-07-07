@@ -1,12 +1,24 @@
 <ion-content class="ion-padding">
-  <form>
+  <form (ngSubmit)="updateHost()" (keydown)="updateHost($event)">
     <ion-item>
       <ion-label position="floating">Host:port</ion-label>
       <ion-input type="text" [value]="host$ | async" [formControl]="hostControl"></ion-input>
     </ion-item>
 
-    <ion-button role="submit" (click)="onClick()" expand="block" fill="clear" shape="round">
-      Save
-    </ion-button>
+    <ion-footer>
+      <ion-toolbar>
+        <ion-buttons slot="primary">
+          <ion-button type="submit">
+            <ion-icon slot="start" name="save-outline"></ion-icon>
+            Save
+          </ion-button>
+
+          <ion-button type="cancel">
+            <ion-icon slot="start" name="close-circle-outline"></ion-icon>
+            Cancel
+          </ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-footer>
   </form>
 </ion-content>
