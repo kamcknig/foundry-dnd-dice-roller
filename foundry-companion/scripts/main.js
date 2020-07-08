@@ -42,7 +42,6 @@ Hooks.on("init", function() {
 Hooks.on('ready', () => {
 	log('ready hook');
 	chatLog = window.ui.chat;
-	log(chatLog);
 });
 
 window.socketLibraryLoaded = () => {
@@ -69,7 +68,12 @@ window.socketLibraryLoaded = () => {
 		socket.on('diconnect', () => log('Disconnected from socket server'));
 
 		if (game.user) {
-			socket.emit('add-user', game.user);
+			let macros = [];
+			for (let i = 1; i < 6; i++) {
+				macros = macros.concat(game.user.getHotbarMacros(i));
+			}
+
+			socket.emit('add-user', game.user, macros);
 		}
 
 		socket.on('foundry-roll', (callbackFn) => {

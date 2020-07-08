@@ -6,6 +6,8 @@ import { ToastController } from '@ionic/angular';
 import { SocketService } from '../feature/socket/socket.service';
 import { selectUser } from '../feature/auth/redux/auth.selectors';
 import { UserRoles, User } from '../feature/foundry/foundry.models';
+import { MacroState } from '../feature/macro/redux/macro.state';
+import { showMacroDialog } from '../feature/macro/redux/macro.actions';
 
 @Component({
   selector: 'app-apps-menu',
@@ -18,12 +20,17 @@ export class AppsMenuComponent implements OnInit {
 
   constructor(
     private _store: Store<AuthState>,
+    private _macroStore: Store<MacroState>,
     private _toastController: ToastController,
     public socketService: SocketService,
   ) { }
 
   ngOnInit(): void {
     this.user$ = this._store.pipe<User>(select(selectUser));
+  }
+
+  public showMacroDialog(): void {
+    this._macroStore.dispatch(showMacroDialog());
   }
 
   async handleRoll(): Promise<void> {
