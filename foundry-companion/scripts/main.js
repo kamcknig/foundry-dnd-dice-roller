@@ -92,6 +92,8 @@ window.socketLibraryLoaded = () => {
 			callbackFn(roll.total);
 		});
 
+		// when we get a request for journal entries, only send the ones that
+		// the currently user actually has permission for
 		socket.on('request-journal-entries', (journalId, callbackFn) => {
 			log(`Request for journal entries ${journalId}`);
 			const entries = game.journal.entities.filter(j => j.permission > 0);
