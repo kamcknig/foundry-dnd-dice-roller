@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { SocketService } from '../../socket/socket.service';
-import { DomSanitizer } from '@angular/platform-browser';
 import { Store, select } from '@ngrx/store';
 import { AuthState } from '../redux/auth.state';
 import { tokenEntered as tokenEntered } from '../redux/auth.actions';
 import { selectFoundryUsers } from '../redux/foundry.selectors';
 import { Observable } from 'rxjs';
-import { User } from '../../foundry/foundry.models';
+import { Foundry } from '../../foundry/foundry.models';
 
 @Component({
   selector: 'app-choose-user',
@@ -14,7 +13,7 @@ import { User } from '../../foundry/foundry.models';
   styleUrls: ['choose-user.component.scss'],
 })
 export class ChooseUserComponent implements OnInit {
-  public userList$: Observable<User[]>;
+  public userList$: Observable<Foundry.User[]>;
   public connected$: Observable<boolean>;
 
   constructor(
@@ -23,7 +22,7 @@ export class ChooseUserComponent implements OnInit {
   ) {}
 
   public ngOnInit(): void {
-    this.userList$ = this._store.pipe<User[]>(select(selectFoundryUsers));
+    this.userList$ = this._store.pipe<Foundry.User[]>(select(selectFoundryUsers));
     this.connected$ = this._socketService.connected$;
   }
 

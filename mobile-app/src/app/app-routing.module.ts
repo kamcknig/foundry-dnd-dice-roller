@@ -4,6 +4,7 @@ import { AuthGuard as AuthGuard } from './guards/auth-guard.guard';
 import { AuthModule } from './feature/auth/auth.module';
 import { HomeModule } from './feature/home/home.module';
 import { JournalModule } from './feature/journal/journal.module';
+import { MacroModule } from './feature/macro/macro.module';
 
 const routes: Routes = [
   {
@@ -18,6 +19,11 @@ const routes: Routes = [
   {
     path: 'journal',
     loadChildren: (): Promise<JournalModule> => import('./feature/journal/journal.module').then( m => m.JournalModule),
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'macros',
+    loadChildren: (): Promise<MacroModule> => import('./feature/macro/macro.module').then( m => m.MacroModule),
     canActivate: [AuthGuard]
   },
   {

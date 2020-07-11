@@ -5,7 +5,7 @@ import { AuthState } from '../feature/auth/redux/auth.state';
 import { ToastController } from '@ionic/angular';
 import { SocketService } from '../feature/socket/socket.service';
 import { selectUser } from '../feature/auth/redux/auth.selectors';
-import { UserRoles, User } from '../feature/foundry/foundry.models';
+import { Foundry } from '../feature/foundry/foundry.models';
 import { MacroState } from '../feature/macro/redux/macro.state';
 import { showMacroDialog } from '../feature/macro/redux/macro.actions';
 
@@ -15,8 +15,8 @@ import { showMacroDialog } from '../feature/macro/redux/macro.actions';
   styleUrls: ['./apps-menu.component.scss'],
 })
 export class AppsMenuComponent implements OnInit {
-  public user$: Observable<User>;
-  public userRoles = UserRoles;
+  public user$: Observable<Foundry.User>;
+  public userRoles = Foundry.UserRoles;
 
   constructor(
     private _store: Store<AuthState>,
@@ -26,7 +26,7 @@ export class AppsMenuComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.user$ = this._store.pipe<User>(select(selectUser));
+    this.user$ = this._store.pipe<Foundry.User>(select(selectUser));
   }
 
   public showMacroDialog(): void {

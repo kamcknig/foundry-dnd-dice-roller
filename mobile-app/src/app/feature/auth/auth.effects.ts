@@ -7,14 +7,14 @@ import { MessageTypes } from 'src/app/message/message-types';
 import { noop } from 'src/app/redux/app.actions';
 import { Router } from '@angular/router';
 import { ToastController } from '@ionic/angular';
-import { User } from '../foundry/foundry.models';
+import { Foundry } from '../foundry/foundry.models';
 
 @Injectable()
 export class AuthEffects {
   tokenEntered$ = createEffect(() =>
     this._actions$.pipe(
       ofType(tokenEntered),
-      switchMap(async ({ token }): Promise<User> => await this._socketService.emit<User>(MessageTypes.TOKEN_ENTERED, true, token)),
+      switchMap(async ({ token }): Promise<Foundry.User> => await this._socketService.emit<Foundry.User>(MessageTypes.TOKEN_ENTERED, true, token)),
       tap(async user => {
         if (!user) {
           const toast = await this._toastController.create({

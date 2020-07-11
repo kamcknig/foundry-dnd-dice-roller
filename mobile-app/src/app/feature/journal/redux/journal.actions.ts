@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { JournalEntry } from '../../foundry/foundry.models';
+import { Foundry } from '../../foundry/foundry.models';
 
 enum JournalActions {
   journalEntriesReceived = 'Journal Entries Received'
@@ -7,5 +7,5 @@ enum JournalActions {
 
 export const journalEntriesReceived = createAction(
   JournalActions.journalEntriesReceived,
-  props<{ entries: JournalEntry[] | Partial<JournalEntry>[] }>()
+  props<{ entries: Foundry.JournalEntry[] | Partial<Foundry.JournalEntry>[] }>()
 );

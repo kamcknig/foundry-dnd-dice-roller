@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { User } from '../../foundry/foundry.models';
+import { Foundry } from '../../foundry/foundry.models';
 
 export enum AuthActions {
   TOKEN_ENTERED = 'Token Entered',
@@ -13,5 +13,5 @@ export const tokenEntered = createAction(
 
 export const userAuthenticated = createAction(
   AuthActions.USER_AUTHENTICATED,
-  props<{ user: User }>()
+  props<{ user: Foundry.User }>()
 );

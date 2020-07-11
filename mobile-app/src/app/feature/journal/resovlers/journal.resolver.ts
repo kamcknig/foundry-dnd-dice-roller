@@ -7,7 +7,9 @@ import { MessageTypes } from 'src/app/message/message-types';
 import { AppState } from 'src/app/redux/app.reducers';
 import { SocketService } from '../../socket/socket.service';
 import { journalEntriesReceived } from '../redux/journal.actions';
-import { JournalEntry } from '../../foundry/foundry.models';
+import { Foundry } from '../../foundry/foundry.models';
+
+type JournalEntry = Foundry.JournalEntry;
 
 @Injectable({ providedIn: 'root' })
 export class JournalResolver implements Resolve<JournalEntry[] | Partial<JournalEntry>[]> {

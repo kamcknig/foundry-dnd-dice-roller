@@ -19,7 +19,11 @@ mobileNsp.on('connection', (mobileSocket: Socket) => {
 
 		try {
 			const connection = getConnFromMobileSocket(mobileSocket);
-			connections.get(connection.foundrySocket.id).mobileSocket = null;
+			if (connection) {
+				connection.mobileSocket = null;
+			}
+
+			console.log(`${Array.from(connections.values()).filter(c => !!c.mobileSocket).length} now connected`);
 		}
 		catch (e) {
 			console.log(`Mobile app '${mobileSocket.id}' not found in foundry connections`);
@@ -39,10 +43,12 @@ mobileNsp.on('connection', (mobileSocket: Socket) => {
 
 	mobileSocket.on('token-entered', (token: string, callbackFn: Function) => {
 		console.log(`Mobile socket '${mobileSocket.id}' entered token '${token}'`);
+		console.log(`Available tokens: [${Array.from(connections.values()).map(c => c.token)}]`);
 
 		const connection = getConnFromToken(token);
 		if (connection) {
 			connection.mobileSocket = mobileSocket;
+			console.log(`${Array.from(connections.values()).filter(c => !!c.mobileSocket).length} now connected`);
 			callbackFn(connection.user);
 		}
 		else {
@@ -97,10 +103,9 @@ function generateToken() {
 }
 
 foundryNsp.on('connection', socket => {
-	console.log(`foundry app '${socket.id}' has connected to server`);
-
 	const token = generateToken();
 	connections.set(socket.id, { foundrySocket: socket, token });
+	console.log(`foundry app '${socket.id}' has connected to server. ${connections.size} connected`);
 	socket.emit('send-token', token);
 
 	// listen for the add-user event. This event is fired from the foundry app when a user logs in.
@@ -112,8 +117,8 @@ foundryNsp.on('connection', socket => {
 	});
 
 	socket.on('disconnect', reason => {
-		console.log(`foundry app '${socket.id}' has disconnected from server. '${reason}'`);
 		connections.delete(socket.id);
+		console.log(`foundry app '${socket.id}' has disconnected from server. '${reason}'. ${connections.size} connected`);
 		mobileNsp.emit('user-list', usersAsArray());
 
 		// TODO if the user was selected on a mobile app, probably need to send an event that the user is no longer
@@ -136,7 +141,7 @@ function usersAsArray(): User[] {
 }
 
 function getConnFromMobileSocket(socket: Socket): Connection {
-	return Array.from(connections.values()).find(v => v.mobileSocket.id === socket.id);
+	return Array.from(connections.values()).find(v => v.mobileSocket?.id === socket.id);
 }
 
 function getConnFromToken(token: string): Connection {

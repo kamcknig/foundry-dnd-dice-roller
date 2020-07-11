@@ -4,7 +4,7 @@ import { Socket } from 'ngx-socket-io';
 import { BehaviorSubject, Subject, Observable } from 'rxjs';
 import { take, takeUntil } from 'rxjs/operators';
 import { MessageTypes } from 'src/app/message/message-types';
-import { User } from '../foundry/foundry.models';
+import { Foundry } from '../foundry/foundry.models';
 import { foundryUserListReceived } from '../foundry/redux/foundry.actions';
 import { FoundryState } from '../foundry/redux/foundry.state';
 import { selectSetting } from '../settings/redux/settings.selectors';
@@ -54,7 +54,7 @@ export class SocketService implements OnDestroy {
 
     // observable to obtain the up-to-date users list when the server sends it
     // TODO: should this be moved elsewhere? would all consumers of socket service care about this?
-    this._socket.fromEvent<User[]>(MessageTypes.USER_LIST).pipe(
+    this._socket.fromEvent<Foundry.User[]>(MessageTypes.USER_LIST).pipe(
       takeUntil(this._destroy$)
     ).subscribe(users => {
       this._foundryStore.dispatch(foundryUserListReceived({ users }));
@@ -66,7 +66,6 @@ export class SocketService implements OnDestroy {
       return;
     }
 
-    console.log('disconnecting old socket');
     this._socket.disconnect();
 
     this._socket = new Socket({
@@ -80,13 +79,11 @@ export class SocketService implements OnDestroy {
   }
 
   private socketConnected = (): void => {
-    console.log('Connected to socket server');
     void this.emit(MessageTypes.REQUEST_USER_LIST);
     this._connectedSub$.next(true);
   }
 
   private socketDisconnected = (reason: string): void => {
-    console.log(`Diconnected from socket server. '${reason}'`);
     this._connectedSub$.next(false);
   }
 
@@ -108,7 +105,6 @@ export class SocketService implements OnDestroy {
       return result;
     }
 
-    console.log(`Emitting ${eventName} to socket server`);
     this._socket.emit(eventName, ...args);
   }
 

@@ -5,7 +5,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { Store } from '@ngrx/store';
 import { selectUser } from './feature/auth/redux/auth.selectors';
 import { Observable } from 'rxjs';
-import { User } from './feature/foundry/foundry.models';
+import { Foundry } from './feature/foundry/foundry.models';
 import { SettingsState } from './feature/settings/redux/settings.state';
 
 @Component({
@@ -15,7 +15,7 @@ import { SettingsState } from './feature/settings/redux/settings.state';
 })
 export class AppComponent implements OnInit {
 
-  public user$: Observable<User>;
+  public user$: Observable<Foundry.User>;
 
   constructor(
     private _platform: Platform,
@@ -27,7 +27,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.user$ = this._store$.select<User>(selectUser);
+    this.user$ = this._store$.select<Foundry.User>(selectUser);
   }
 
   initializeApp(): void {

@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { User } from '../foundry.models';
+import { Foundry } from '../foundry.models';
 
 export enum FoundryActions {
   FOUNDRY_USER_ADDED = 'Foundry User Added'
@@ -7,5 +7,5 @@ export enum FoundryActions {
 
 export const foundryUserListReceived = createAction(
   FoundryActions.FOUNDRY_USER_ADDED,
-  props<{ users: User[] }>()
+  props<{ users: Foundry.User[] }>()
 );

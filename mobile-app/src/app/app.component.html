@@ -17,6 +17,8 @@
     </ion-toolbar>
   </ion-header>
 
-  <app-apps-menu *ngIf="user$ | async"></app-apps-menu>
-  <ion-router-outlet id="main"></ion-router-outlet>
+  <ion-content>
+    <app-apps-menu *ngIf="user$ | async"></app-apps-menu>
+    <ion-router-outlet id="main"></ion-router-outlet>
+  </ion-content>
 </ion-app>

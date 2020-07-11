@@ -3,19 +3,20 @@ import { CommonModule } from '@angular/common';
 import { SharedModule } from '../shared/shared.module';
 import { EffectsModule } from '@ngrx/effects';
 import { MacroEffects } from './redux/macro.effects';
-import { MacroDialogComponent } from './components/macro-dialog/macro-dialog.component';
+import { MacrosPageComponent } from './components/macro-page/macro-page.component';
+import { MacroRoutingModule } from './macro-routing.module';
+import { MatExpansionModule } from '@angular/material/expansion';
 
 @NgModule({
   declarations: [
-    MacroDialogComponent
+    MacrosPageComponent
   ],
   imports: [
     CommonModule,
     SharedModule,
+    MacroRoutingModule,
+    MatExpansionModule,
     EffectsModule.forFeature([MacroEffects])
-  ],
-  exports: [
-    MacroDialogComponent
   ]
 })
 export class MacroModule { }

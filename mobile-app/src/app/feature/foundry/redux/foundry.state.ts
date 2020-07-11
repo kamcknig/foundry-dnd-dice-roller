@@ -1,10 +1,10 @@
 import { AppState } from 'src/app/redux/app.reducers';
-import { User } from '../foundry.models';
+import { Foundry } from '../foundry.models';
 
 export const foundryStateKey: string = 'foundry';
 
 export interface FoundryState extends AppState {
-  users: User[];
+  users: Foundry.User[];
 }
 
 export const initialState = {

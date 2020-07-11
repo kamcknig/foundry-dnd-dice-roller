@@ -1,12 +1,10 @@
+import { Foundry } from '../../foundry/foundry.models';
+
 export const macroStateKey: string = 'macro';
 
 export interface MacroState {
-  macros: { slot: number, macro: Macro }[];
+  macros: { slot: number, macro: Foundry.Macro }[];
   retrieved: boolean;
-}
-
-export interface Macro {
-  [key: string]: any;
 }
 
 export const initialState: MacroState = {
