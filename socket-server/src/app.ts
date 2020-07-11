@@ -1,5 +1,5 @@
 import { Socket, Namespace, Server } from "socket.io";
-import { Connection, User, JournalEntry } from "./connection.model";
+import { Connection, User, JournalEntry, Macro } from "./connection.model";
 
 const io: Server = require('socket.io')(8082);
 
@@ -104,8 +104,9 @@ foundryNsp.on('connection', socket => {
 	socket.emit('send-token', token);
 
 	// listen for the add-user event. This event is fired from the foundry app when a user logs in.
-	socket.on('add-user', user => {
-		console.log(`Received new user ${user._id}`);
+	socket.on('add-user', (user: User, macros: Macro[]) => {
+		console.log(`Received new user '${user._id}'`);
+		user.macros = macros;
 		connections.get(socket.id).user = user;
 		mobileNsp.emit('user-list', usersAsArray());
 	});

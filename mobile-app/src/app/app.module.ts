@@ -21,6 +21,7 @@ import { FoundryModule } from './feature/foundry/foundry.module';
 import { HomeModule } from './feature/home/home.module';
 import { SettingsModule } from './feature/settings/settings.module';
 import { SharedModule } from './feature/shared/shared.module';
+import { MacroModule } from './feature/macro/macro.module';
 
 // https://foundry-api2.turkeysunite.com
 
@@ -48,7 +49,8 @@ import { SharedModule } from './feature/shared/shared.module';
     }),
     EffectsModule.forRoot([]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
-    FoundryModule
+    FoundryModule,
+    MacroModule
   ],
   providers: [
     StatusBar,

@@ -38,6 +38,12 @@
               },
               {
                 "input": "src/global.scss"
+              },
+              {
+                "input": "src/styles/default.css"
+              },
+              {
+                "input": "src/styles/journal.css"
               }
             ],
             "scripts": []

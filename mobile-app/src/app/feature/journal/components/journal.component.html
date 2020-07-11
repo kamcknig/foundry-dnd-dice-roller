@@ -10,7 +10,7 @@
       <mat-expansion-panel-header>
         {{jEntry.name}}
       </mat-expansion-panel-header>
-      <div [innerHTML]="jEntry.content"></div>
+      <div #entry class="journal-sheet" [innerHTML]="jEntry.content"></div>
     </mat-expansion-panel>
   </mat-accordion>
 </ion-content>
