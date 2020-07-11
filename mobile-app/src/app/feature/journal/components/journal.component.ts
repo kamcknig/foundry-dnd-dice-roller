@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewChildren, QueryList } from '@angular/core';
 import { select, Store } from '@ngrx/store';
-import { Observable, Subject, of } from 'rxjs';
+import { Observable, Subject, of, throwError } from 'rxjs';
 import { map, takeUntil, tap, withLatestFrom, catchError } from 'rxjs/operators';
 import { selectUser } from '../../auth/redux/auth.selectors';
 import { AuthState } from '../../auth/redux/auth.state';
@@ -14,7 +14,11 @@ import { JournalState } from '../redux/journal.state';
   styleUrls: ['./journal.component.scss'],
 })
 export class JournalComponent implements OnInit, AfterViewInit, OnDestroy {
-  @ViewChildren('entry') entry: QueryList<ElementRef<HTMLDivElement>>;
+  private _entries: ElementRef<HTMLDivElement>[];
+
+  @ViewChildren('entry') set entry(value: QueryList<ElementRef<HTMLDivElement>>) {
+    this._entries = Array.from(value);
+  }
 
   private _destroy$: Subject<void> = new Subject<void>();
 
@@ -30,15 +34,13 @@ export class JournalComponent implements OnInit, AfterViewInit, OnDestroy {
   }
 
   ngAfterViewInit(): void {
-    console.log(this.entry);
-
     this._authStore$.pipe(
       select(selectUser),
       withLatestFrom(this.journalEntries$),
       takeUntil(this._destroy$),
       catchError(err => {
         console.log(`There was an issue modifying journal secrets. '${err}'`);
-        return of(err);
+        return throwError(err);
       })
     ).subscribe(([u, entries]) => {
       const permOverride: boolean = u.role === UserRoles.GAMEMASTER || u.role === UserRoles.ASSISTANT;
@@ -49,11 +51,15 @@ export class JournalComponent implements OnInit, AfterViewInit, OnDestroy {
       entries.forEach((e, index) => {
         secretPerm = e.permission[u._id] !== undefined ? e.permission[u._id] === EntityPermissions.OWNER : e.permission.default === EntityPermissions.OWNER
         secretPerm = secretPerm || permOverride;
-        const elems = this.entry.toArray();
-        const secrets = elems[index].nativeElement.getElementsByClassName('secret');
+        const secrets = this._entries[index].nativeElement.getElementsByClassName('secret');
         const secretsArr = Array.from(secrets);
         secretsArr.forEach(s => {
-          s.className = `${s.className} ${secretPerm ? 'visible' : 'hidden'}`;
+          if (secretPerm) {
+            s.classList.remove('hidden');
+          }
+          else {
+            s.classList.add('hidden');
+          }
         });
       });
     });
