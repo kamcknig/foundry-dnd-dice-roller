@@ -1,0 +1,45 @@
+:host ::ng-deep {
+  & .hidden {
+    display: none;
+  }
+
+  & .mat-expansion-panel-body {
+    padding: 0px;
+  }
+
+  & .mat-expansion-panel-spacing {
+    margin: 0;
+  }
+
+  & p {
+    margin: 10px 0px;
+  }
+
+  & h1 {
+    border-bottom: 2px solid #782e22;
+  }
+
+  & img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  & blockquote {
+    padding: 0 0 0 20px;
+    border-left: 3px solid #7a7971;
+    font-style: italic;
+  }
+
+  & section.secret {
+    padding: 0 5px;
+    background: rgba(53, 0, 121, 0.05);
+    border-top: 1px solid #666;
+    border-bottom: 1px solid #666;
+  }
+}
+
+.journal-sheet {
+  background: url('../../../../assets/ui/parchment.jpg');
+  padding: 5px;
+}

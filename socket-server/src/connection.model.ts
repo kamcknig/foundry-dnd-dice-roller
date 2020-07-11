@@ -17,6 +17,25 @@ export interface User {
   role: number;
   viewedScene: any;
   _id: string;
+  macros?: Macro[]
+}
+
+export interface Macro {
+  slot: number;
+  maco: {
+    _id: string;
+    name: string;
+    permission: {
+
+    };
+    type: 'script' | 'chat';
+    sort: number;
+    scope: string;
+    command: string;
+    author: string;
+    img: string;
+    actorIds: any[]
+  }
 }
 
 export enum USER_ROLES {
